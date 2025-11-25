@@ -12,7 +12,13 @@ class Model:
         Costruisce il grafo (self.G) inserendo tutti gli Hub (i nodi) presenti e filtrando le Tratte con
         guadagno medio per spedizione >= threshold (euro)
         """
-        # TODO
+        self._lista_hub = DAO.leggiHub()
+        self._lista_spedizioni = DAO.leggispedizione()
+        for hub in self._lista_hub:
+            self.G.add_node(hub)
+        for
+
+
 
     def get_num_edges(self):
         """
