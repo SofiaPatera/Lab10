@@ -57,23 +57,27 @@ class DAO:
 
 
     @staticmethod
-    def LeggiTratta():
+    def leggitratte():
         conn = DBConnect.get_connection()
         results = []
-        query = """ SELECT 
-                    LEAST (id_hub_destinazione, id_hub_origine) AS hub1
+        query = """ SELECT LEAST (id_hub_destinazione, id_hub_origine) AS hub1
                     GREATEST(id_hub_destinazione, id_hub_origine) AS hub2
                     SUM(valore_merce)  AS valore_totale
-                    count(*)  AS n_spedizione
-                    from spedizione  AS s
+                    Count(*)  AS n_spedizioni
+                    from spedizione  AS S
                     GROUP BY hub1, hub2"""
         cursor = conn.cursor(dictionary=True)
         cursor.execute(query)
         for row in cursor:
-            tratta = Tratta(row['hub1'], row['hub2'], row['valore_tot'], row['n_spedizioni'])
+            tratta = Tratta(row['hub1'], row['hub2'], row['valore_totale'], row['n_spedizioni'])
+            results.append(tratta)
+        cursor.close()
+        conn.close()
+        return results
 
 
-   """ select h1 
+
+""" select h1 
             h2 
     sum(vlaore merce) as valore totale 
 count(*)
