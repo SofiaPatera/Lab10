@@ -6,6 +6,10 @@ class Model:
         self._nodes = None
         self._edges = None
         self.G = nx.Graph()
+        self._hub_list  = DAO.leggiHub()
+        self._hub_dict = {}
+        for h in self._hub_list:
+            self._hub_dict[h.id] = h.nome
 
     def costruisci_grafo(self, threshold):
         """
@@ -29,19 +33,18 @@ class Model:
         Restituisce il numero di Tratte (edges) del grafo
         :return: numero di edges del grafo
         """
-
+        return self.G.number_of_edges()
 
     def get_num_nodes(self):
         """
         Restituisce il numero di Hub (nodi) del grafo
         :return: numero di nodi del grafo
         """
-        # TODO
+        return self.G.number_of_nodes()
 
     def get_all_edges(self):
         """
         Restituisce tutte le Tratte (gli edges) con i corrispondenti pesi
         :return: gli edges del grafo con gli attributi (il weight)
         """
-        # TODO
-
+        return list(self.G.edges(data = True)) #data = True serve per dire a nx che mi deve restiruire anche il peso

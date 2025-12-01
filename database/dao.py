@@ -60,12 +60,14 @@ class DAO:
     def leggitratte():
         conn = DBConnect.get_connection()
         results = []
-        query = """ SELECT LEAST (id_hub_destinazione, id_hub_origine) AS hub1
-                    GREATEST(id_hub_destinazione, id_hub_origine) AS hub2
-                    SUM(valore_merce)  AS valore_totale
-                    Count(*)  AS n_spedizioni
-                    from spedizione  AS S
-                    GROUP BY hub1, hub2"""
+        query = """ SELECT 
+                    LEAST(id_hub_destinazione, id_hub_origine) AS hub1,
+                    GREATEST(id_hub_destinazione, id_hub_origine) AS hub2,
+                    SUM(valore_merce) AS valore_totale,
+                    COUNT(*) AS n_spedizioni
+                    FROM spedizione AS S
+                    GROUP BY hub1, hub2
+                    """
         cursor = conn.cursor(dictionary=True)
         cursor.execute(query)
         for row in cursor:
